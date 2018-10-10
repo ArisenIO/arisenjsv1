@@ -14,7 +14,7 @@
     "base": "",
     "action": {
       "name": "bidname",
-      "account": "eosio"
+      "account": "arisen"
     },
     "fields": {
       "bidder": "account_name",
@@ -48,7 +48,7 @@
     "base": "",
     "action": {
       "name": "buyram",
-      "account": "eosio"
+      "account": "arisen"
     },
     "fields": {
       "payer": "account_name",
@@ -60,7 +60,7 @@
     "base": "",
     "action": {
       "name": "buyrambytes",
-      "account": "eosio"
+      "account": "arisen"
     },
     "fields": {
       "payer": "account_name",
@@ -72,7 +72,7 @@
     "base": "",
     "action": {
       "name": "canceldelay",
-      "account": "eosio"
+      "account": "arisen"
     },
     "fields": {
       "canceling_auth": "permission_level",
@@ -83,7 +83,7 @@
     "base": "",
     "action": {
       "name": "claimrewards",
-      "account": "eosio"
+      "account": "arisen"
     },
     "fields": {
       "owner": "account_name"
@@ -100,7 +100,7 @@
     "base": "",
     "action": {
       "name": "delegatebw",
-      "account": "eosio"
+      "account": "arisen"
     },
     "fields": {
       "from": "account_name",
@@ -123,14 +123,14 @@
     "base": "",
     "action": {
       "name": "deleteauth",
-      "account": "eosio"
+      "account": "arisen"
     },
     "fields": {
       "account": "account_name",
       "permission": "permission_name"
     }
   },
-  "eosio_global_state": {
+  "arisen_global_state": {
     "base": "blockchain_parameters",
     "fields": {
       "max_ram_size": "uint64",
@@ -167,7 +167,7 @@
     "base": "",
     "action": {
       "name": "linkauth",
-      "account": "eosio"
+      "account": "arisen"
     },
     "fields": {
       "account": "account_name",
@@ -189,7 +189,7 @@
     "base": "",
     "action": {
       "name": "newaccount",
-      "account": "eosio"
+      "account": "arisen"
     },
     "fields": {
       "creator": "account_name",
@@ -202,7 +202,7 @@
     "base": "",
     "action": {
       "name": "onerror",
-      "account": "eosio"
+      "account": "arisen"
     },
     "fields": {
       "sender_id": "uint128",
@@ -248,7 +248,7 @@
     "base": "",
     "action": {
       "name": "refund",
-      "account": "eosio"
+      "account": "arisen"
     },
     "fields": {
       "owner": "account_name"
@@ -267,7 +267,7 @@
     "base": "",
     "action": {
       "name": "regproducer",
-      "account": "eosio"
+      "account": "arisen"
     },
     "fields": {
       "producer": "account_name",
@@ -280,7 +280,7 @@
     "base": "",
     "action": {
       "name": "regproxy",
-      "account": "eosio"
+      "account": "arisen"
     },
     "fields": {
       "proxy": "account_name",
@@ -291,7 +291,7 @@
     "base": "",
     "action": {
       "name": "reqauth",
-      "account": "eosio"
+      "account": "arisen"
     },
     "fields": {
       "from": "account_name"
@@ -301,7 +301,7 @@
     "base": "",
     "action": {
       "name": "rmvproducer",
-      "account": "eosio"
+      "account": "arisen"
     },
     "fields": {
       "producer": "account_name"
@@ -311,7 +311,7 @@
     "base": "",
     "action": {
       "name": "sellram",
-      "account": "eosio"
+      "account": "arisen"
     },
     "fields": {
       "account": "account_name",
@@ -322,7 +322,7 @@
     "base": "",
     "action": {
       "name": "setalimits",
-      "account": "eosio"
+      "account": "arisen"
     },
     "fields": {
       "account": "account_name",
@@ -335,7 +335,7 @@
     "base": "",
     "action": {
       "name": "setglimits",
-      "account": "eosio"
+      "account": "arisen"
     },
     "fields": {
       "cpu_usec_per_period": "int64"
@@ -345,7 +345,7 @@
     "base": "",
     "action": {
       "name": "setprods",
-      "account": "eosio"
+      "account": "arisen"
     },
     "fields": {
       "schedule": "producer_key[]"
@@ -355,7 +355,7 @@
     "base": "",
     "action": {
       "name": "setabi",
-      "account": "eosio"
+      "account": "arisen"
     },
     "fields": {
       "account": "account_name",
@@ -366,7 +366,7 @@
     "base": "",
     "action": {
       "name": "setcode",
-      "account": "eosio"
+      "account": "arisen"
     },
     "fields": {
       "account": "account_name",
@@ -379,7 +379,7 @@
     "base": "",
     "action": {
       "name": "setparams",
-      "account": "eosio"
+      "account": "arisen"
     },
     "fields": {
       "params": "blockchain_parameters"
@@ -389,7 +389,7 @@
     "base": "",
     "action": {
       "name": "setpriv",
-      "account": "eosio"
+      "account": "arisen"
     },
     "fields": {
       "account": "account_name",
@@ -400,7 +400,7 @@
     "base": "",
     "action": {
       "name": "setram",
-      "account": "eosio"
+      "account": "arisen"
     },
     "fields": {
       "max_ram_size": "uint64"
@@ -420,7 +420,7 @@
     "base": "",
     "action": {
       "name": "undelegatebw",
-      "account": "eosio"
+      "account": "arisen"
     },
     "fields": {
       "from": "account_name",
@@ -433,7 +433,7 @@
     "base": "",
     "action": {
       "name": "unlinkauth",
-      "account": "eosio"
+      "account": "arisen"
     },
     "fields": {
       "account": "account_name",
@@ -445,7 +445,7 @@
     "base": "",
     "action": {
       "name": "unregprod",
-      "account": "eosio"
+      "account": "arisen"
     },
     "fields": {
       "producer": "account_name"
@@ -455,7 +455,7 @@
     "base": "",
     "action": {
       "name": "updateauth",
-      "account": "eosio"
+      "account": "arisen"
     },
     "fields": {
       "account": "account_name",
@@ -477,7 +477,7 @@
     "base": "",
     "action": {
       "name": "voteproducer",
-      "account": "eosio"
+      "account": "arisen"
     },
     "fields": {
       "voter": "account_name",

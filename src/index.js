@@ -1,4 +1,4 @@
-const ecc = require('eosjs-ecc')
+const ecc = require('arisenjs-ecc')
 const Fcbuffer = require('fcbuffer')
 const RsnApi = require('eosjs-api')
 const assert = require('assert')
