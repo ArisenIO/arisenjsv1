@@ -1,55 +1,55 @@
-[![Build Status](https://travis-ci.org/EOSIO/eosjs.svg?branch=master)](https://travis-ci.org/EOSIO/eosjs)
-[![NPM](https://img.shields.io/npm/v/eosjs.svg)](https://www.npmjs.org/package/eosjs)
+[![Build Status](https://travis-ci.org/ARISENIO/arisenjs.svg?branch=master)](https://travis-ci.org/ARISENIO/arisenjs)
+[![NPM](https://img.shields.io/npm/v/arisenjs.svg)](https://www.npmjs.org/package/arisenjs)
 
-# Eosjs
+# ArisenJSV1
 
-General purpose library for EOSIO blockchains.
+General purpose library for Arisen blockchains.
 
 ### Versions
 
-| [EOSIO/eosjs](/EOSIO/eosjs) | [Npm](https://www.npmjs.com/package/eosjs) | [EOSIO/eos](https://github.com/EOSIO/eos) | [Docker Hub](https://hub.docker.com/r/eosio/eos/) |
+| [ARISENIO/arisenjs](/ARISENIO/arisenjs) | [Npm](https://www.npmjs.com/package/arisenjs) | [ARISENIO/rsn](https://github.com/ARISENIO/rsn) | [Docker Hub](https://hub.docker.com/r/arisen/rsn/) |
 | --- | --- | --- | --- |
-| tag: 15.0.2 | `npm install eosjs` (version 15) | tag: v1.0.6 | eosio/eos:v1.0.6 |
+| tag: 15.0.2 | `npm install arisenjs` (version 15) | tag: v1.0.6 | arisen/rsn:v1.0.6 |
 
 Upgrade notes:
 * Converted some types in **format** module from unsigned to signed: UDecimalPad -> DecimalPad for example (15.0.1)
-* All `asset` and `extended_asset` amounts require exact decimal places (Change `1 SYS` to `1.0000 SYS`) (15.0.0)
+* All `asset` and `extended_asset` amounts require exact decimal places (Change `1 RSN` to `1.0000 RSN`) (15.0.0)
 * Use `config.verbose` instead of `config.debug` (14.1.0)
 
 Prior [version](./docs/prior_versions.md) matrix.
 
 ### Usage
 
-Ways to instantiate eosjs.
+Ways to instantiate arisenjs.
 
 ```js
-Eos = require('eosjs')
+Rsn = require('arisenjs')
 
 // Private key or keys (array) provided statically or by way of a function.
 // For multiple keys, the get_required_keys API is used (more on that below).
 keyProvider: '5KQwrPbwdL6PhXujxW37FSSQZ1JiwsST4cqQzDeyXtP79zkvFD3'
 
 // Localhost Testnet (run ./docker/up.sh)
-eos = Eos({keyProvider})
+rsn = Rsn({keyProvider})
 
 // Connect to a testnet or mainnet
-eos = Eos({httpEndpoint, chainId, keyProvider})
+rsn = Rsn({httpEndpoint, chainId, keyProvider})
 
 // Cold-storage
-eos = Eos({httpEndpoint: null, chainId, keyProvider})
+rsn = Rsn({httpEndpoint: null, chainId, keyProvider})
 
-// Read-only instance when 'eosjs' is already a dependency
-eos = Eos.modules.api({/*config*/})
+// Read-only instance when 'arisenjs' is already a dependency
+rsn = Rsn.modules.api({/*config*/})
 
 // Read-only instance when an application never needs to write (smaller library)
-EosApi = require('eosjs-api')
-eos = EosApi({/*config*/})
+RsnApi = require('arisenjs-api')
+rsn = RsnApi({/*config*/})
 ```
 
 No-arguments prints usage.
 
 ```js
-eos.getBlock()
+rsn.getBlock()
 ```
 ```json
 USAGE
@@ -61,7 +61,7 @@ PARAMETERS
 }
 ```
 
-Start a nodeosd process.  The docker in this repository provides a setup
+Start a nodrsnd process.  The docker in this repository provides a setup
 the supports the examples in this README.
 
 ```bash
@@ -72,34 +72,34 @@ All functions read only or transactional follow this pattern for parameters.
 
 ```js
 // If the last argument is a function it is treated as a callback
-eos.getBlock(1, (error, result) => {})
+rsn.getBlock(1, (error, result) => {})
 
 // If a callback is not provided, a Promise is returned
-eos.getBlock(1) // @returns {Promise}
+rsn.getBlock(1) // @returns {Promise}
 
 // Parameters can be positional or an object
-eos.getBlock({block_num_or_id: 1})
+rsn.getBlock({block_num_or_id: 1})
 
 // An API with no parameters is invoked with an empty object or callback (avoids logging usage)
-eos.getInfo({}) // @returns {Promise}
-eos.getInfo((error, result) => { console.log(error, result) })
+rsn.getInfo({}) // @returns {Promise}
+rsn.getInfo((error, result) => { console.log(error, result) })
 ```
 
-Chain and history API functions are available after creating the `eos` object.
+Chain and history API functions are available after creating the `rsn` object.
 API methods and documentation are generated from the chain and history json files.
 
-* [chain.json](https://github.com/EOSIO/eosjs-api/blob/master/src/api/v1/chain.json)
-* [history.json](https://github.com/EOSIO/eosjs-api/blob/master/src/api/v1/history.json)
+* [chain.json](https://github.com/ARISENIO/arisenjs-api/blob/master/src/api/v1/chain.json)
+* [history.json](https://github.com/ARISENIO/arisenjs-api/blob/master/src/api/v1/history.json)
 
 Until we generate a markdown for these, please convert the names in these
 json to camel case functions.
 
-* `"get_info": ..` is `eos.getInfo(..)`
+* `"get_info": ..` is `rsn.getInfo(..)`
 
 ### Configuration
 
 ```js
-Eos = require('eosjs')
+Rsn = require('arisenjs')
 
 // Default configuration (additional options below)
 config = {
@@ -112,7 +112,7 @@ config = {
   sign: true
 }
 
-eos = Eos(config)
+rsn = Rsn(config)
 ```
 
 * **chainId** `hex` - Unique ID for the blockchain you're connecting too.  This
@@ -128,15 +128,15 @@ eos = Eos(config)
   `get_required_keys` is called to discover which signing keys to use.  If a
   function is provided, this function is called for each transaction.
 
-* **httpEndpoint** `string` - http or https location of a nodeosd server
-  providing a chain API.  When using eosjs from a browser remember to configure
-  the same origin policy in nodeosd or proxy server.  For testing, nodeosd
+* **httpEndpoint** `string` - http or https location of a nodrsnd server
+  providing a chain API.  When using arisenjs from a browser remember to configure
+  the same origin policy in nodrsnd or proxy server.  For testing, nodrsnd
   configuration `access-control-allow-origin = *` could be used.
 
   Set this value to **null** for a cold-storage (no network) configuration.
 
 * **expireInSeconds** `number` - number of seconds before the transaction
-  will expire.  The time is based on the nodeosd's clock.  An unexpired
+  will expire.  The time is based on the nodrsnd's clock.  An unexpired
   transaction that may have had an error is a liability until the expiration
   is reached, this time should be brief.
 
@@ -157,9 +157,9 @@ eos = Eos(config)
   * `null|undefined` - broadcast as usual
 
 * **transactionHeaders** (advanced) - manually calculate transaction header.  This
-  may be provided so eosjs does not need to make header related API calls to
-  nodeos.  Used in environments like cold-storage.  This callback is called for
-  every transaction. Headers are documented here [eosjs-api#headers](https://github.com/EOSIO/eosjs-api/blob/HEAD/docs/index.md#headers--object).
+  may be provided so arisenjs does not need to make header related API calls to
+  nodrsn.  Used in environments like cold-storage.  This callback is called for
+  every transaction. Headers are documented here [arisenjs-api#headers](https://github.com/ARISENIO/arisenjs-api/blob/HEAD/docs/index.md#headers--object).
   * `transactionHeaders: (expireInSeconds, callback) => {callback(null/*error*/, headers)}`
 
 * **logger** - default logging configuration.
@@ -185,7 +185,7 @@ options = {
 ```
 
 ```js
-eos.transfer('alice', 'bob', '1.0000 SYS', '', options)
+rsn.transfer('alice', 'bob', '1.0000 RSN', '', options)
 ```
 
 * **authorization** `[array<auth>|auth]` - identifies the
@@ -226,12 +226,12 @@ Create and send (broadcast) a transaction:
 
 ```javascript
 /** @return {Promise} */
-eos.transaction(
+rsn.transaction(
   {
     // ...headers,
     actions: [
       {
-        account: 'eosio.token',
+        account: 'arisen.token',
         name: 'transfer',
         authorization: [{
           actor: 'inita',
@@ -240,7 +240,7 @@ eos.transaction(
         data: {
           from: 'inita',
           to: 'initb',
-          quantity: '7.0000 SYS',
+          quantity: '7.0000 RSN',
           memo: ''
         }
       }
@@ -257,51 +257,51 @@ more frequently.  This avoids having lots of JSON in the code.
 
 ```javascript
 // Run with no arguments to print usage.
-eos.transfer()
+rsn.transfer()
 
 // Callback is last, when omitted a promise is returned
-eos.transfer('inita', 'initb', '1.0000 SYS', '', (error, result) => {})
-eos.transfer('inita', 'initb', '1.1000 SYS', '') // @returns {Promise}
+rsn.transfer('inita', 'initb', '1.0000 RSN', '', (error, result) => {})
+rsn.transfer('inita', 'initb', '1.1000 RSN', '') // @returns {Promise}
 
 // positional parameters
-eos.transfer('inita', 'initb', '1.2000 SYS', '')
+rsn.transfer('inita', 'initb', '1.2000 RSN', '')
 
 // named parameters
-eos.transfer({from: 'inita', to: 'initb', quantity: '1.3000 SYS', memo: ''})
+rsn.transfer({from: 'inita', to: 'initb', quantity: '1.3000 RSN', memo: ''})
 
 // options appear after parameters
 options = {broadcast: true, sign: true}
 
 // `false` is a shortcut for {broadcast: false}
-eos.transfer('inita', 'initb', '1.4000 SYS', '', false)
+rsn.transfer('inita', 'initb', '1.4000 RSN', '', false)
 ```
 
-Read-write API methods and documentation are generated from the eosio
-[token](https://github.com/EOSIO/eosjs/blob/master/src/schema/eosio_token.json) and
-[system](https://github.com/EOSIO/eosjs/blob/master/src/schema/eosio_system.json).
+Read-write API methods and documentation are generated from the arisen
+[token](https://github.com/ARISENIO/arisenjs/blob/master/src/schema/arisen_token.json) and
+[system](https://github.com/ARISENIO/arisenjs/blob/master/src/schema/arisen_system.json).
 
 Assets amounts require zero padding.  For a better user-experience, if you know
 the correct precision you may use DecimalPad to add the padding.
 
 ```js
-DecimalPad = Eos.modules.format.DecimalPad
+DecimalPad = Rsn.modules.format.DecimalPad
 userInput = '10.2'
 precision = 4
 assert.equal('10.2000', DecimalPad(userInput, precision))
 ```
 
 For more advanced signing, see `keyProvider` and `signProvider` in
-[index.test.js](https://github.com/EOSIO/eosjs/blob/master/src/index.test.js).
+[index.test.js](https://github.com/ARISENIO/arisenjs/blob/master/src/index.test.js).
 
 ### Shorthand
 
 Shorthand is available for some types such as Asset and Authority.  This syntax
 is only for concise functions and does not work when providing entire transaction
-objects to `eos.transaction`..
+objects to `rsn.transaction`..
 
 For example:
 * permission `inita` defaults `inita@active`
-* authority `'EOS6MRy..'` expands `{threshold: 1, keys: [key: 'EOS6MRy..', weight: 1]}`
+* authority `'RSN6MRy..'` expands `{threshold: 1, keys: [key: 'RSN6MRy..', weight: 1]}`
 * authority `inita` expands `{{threshold: 1, accounts: [..actor: 'inita', permission: 'active', weight: 1]}}`
 
 ### New Account
@@ -310,27 +310,27 @@ New accounts will likely require some staked tokens for RAM and bandwidth.
 
 ```javascript
 wif = '5KQwrPbwdL6PhXujxW37FSSQZ1JiwsST4cqQzDeyXtP79zkvFD3'
-pubkey = 'EOS6MRyAjQq8ud7hVNYcfnVPJqcVpscN5So8BhtHuGYqET5GDW5CV'
+pubkey = 'RSN6MRyAjQq8ud7hVNYcfnVPJqcVpscN5So8BhtHuGYqET5GDW5CV'
 
-eos.transaction(tr => {
+rsn.transaction(tr => {
   tr.newaccount({
-    creator: 'eosio',
+    creator: 'arisen',
     name: 'myaccount',
     owner: pubkey,
     active: pubkey
   })
 
   tr.buyrambytes({
-    payer: 'eosio',
+    payer: 'arisen',
     receiver: 'myaccount',
     bytes: 8192
   })
 
   tr.delegatebw({
-    from: 'eosio',
+    from: 'arisen',
     receiver: 'myaccount',
-    stake_net_quantity: '10.0000 SYS',
-    stake_cpu_quantity: '10.0000 SYS',
+    stake_net_quantity: '10.0000 RSN',
+    stake_cpu_quantity: '10.0000 RSN',
     transfer: 0
   })
 })
@@ -346,7 +346,7 @@ If you're loading a **wasm** file, you do not need binaryen. If you're loading
 a **wast** file you can include and configure the binaryen compiler, this is
 used to compile to **wasm** automatically when calling **setcode**.
 
-Versions of binaryen may be [problematic](https://github.com/EOSIO/eos/issues/2187).
+Versions of binaryen may be [problematic](https://github.com/ARISENIO/arisen/issues/2187).
 
 ```bash
 $ npm install binaryen@37.0.0
@@ -354,34 +354,34 @@ $ npm install binaryen@37.0.0
 
 ```js
 binaryen = require('binaryen')
-eos = Eos({keyProvider, binaryen})
+rsn = Rsn({keyProvider, binaryen})
 ```
 
 #### Deploy
 
 ```javascript
-wasm = fs.readFileSync(`docker/contracts/eosio.token/eosio.token.wasm`)
-abi = fs.readFileSync(`docker/contracts/eosio.token/eosio.token.abi`)
+wasm = fs.readFileSync(`docker/contracts/arisen.token/arisen.token.wasm`)
+abi = fs.readFileSync(`docker/contracts/arisen.token/arisen.token.abi`)
 
 // Publish contract to the blockchain
-eos.setcode('myaccount', 0, 0, wasm) // @returns {Promise}
-eos.setabi('myaccount', JSON.parse(abi)) // @returns {Promise}
+rsn.setcode('myaccount', 0, 0, wasm) // @returns {Promise}
+rsn.setabi('myaccount', JSON.parse(abi)) // @returns {Promise}
 ```
 
 #### Fetch a smart contract
 
 ```js
 // @returns {Promise}
-eos.contract('myaccount', [options], [callback])
+rsn.contract('myaccount', [options], [callback])
 
 // Run immediately, `myaction` returns a Promise
-eos.contract('myaccount').then(myaccount => myaccount.myaction(..))
+rsn.contract('myaccount').then(myaccount => myaccount.myaction(..))
 
 // Group actions. `transaction` returns a Promise but `myaction` does not
-eos.transaction('myaccount', myaccount => { myaccount.myaction(..) })
+rsn.transaction('myaccount', myaccount => { myaccount.myaction(..) })
 
 // Transaction with multiple contracts
-eos.transaction(['myaccount', 'myaccount2'], ({myaccount, myaccount2}) => {
+rsn.transaction(['myaccount', 'myaccount2'], ({myaccount, myaccount2}) => {
    myaccount.myaction(..)
    myaccount2.myaction(..)
 })
@@ -390,13 +390,13 @@ eos.transaction(['myaccount', 'myaccount2'], ({myaccount, myaccount2}) => {
 #### Offline or cold-storage contract
 
 ```js
-eos = Eos({httpEndpoint: null})
+rsn = Rsn({httpEndpoint: null})
 
-abi = fs.readFileSync(`docker/contracts/eosio.token/eosio.token.abi`)
-eos.fc.abiCache.abi('myaccount', JSON.parse(abi))
+abi = fs.readFileSync(`docker/contracts/arisen.token/arisen.token.abi`)
+rsn.fc.abiCache.abi('myaccount', JSON.parse(abi))
 
 // Check that the ABI is available (print usage)
-eos.contract('myaccount').then(myaccount => myaccount.create())
+rsn.contract('myaccount').then(myaccount => myaccount.create())
 ```
 #### Offline or cold-storage transaction
 
@@ -406,14 +406,14 @@ eos.contract('myaccount').then(myaccount => myaccount.create())
 // Prepare headers
 expireInSeconds = 60 * 60 // 1 hour
 
-eos = Eos(/* {httpEndpoint: 'https://..'} */)
+rsn = Rsn(/* {httpEndpoint: 'https://..'} */)
 
-info = await eos.getInfo({})
+info = await rsn.getInfo({})
 chainDate = new Date(info.head_block_time + 'Z')
 expiration = new Date(chainDate.getTime() + expireInSeconds * 1000)
 expiration = expiration.toISOString().split('.')[0]
 
-block = await eos.getBlock(info.last_irreversible_block_num)
+block = await rsn.getBlock(info.last_irreversible_block_num)
 
 transactionHeaders = {
   expiration,
@@ -424,16 +424,16 @@ transactionHeaders = {
 // OFFLINE (bring `transactionHeaders`)
 
 // All keys in keyProvider will sign.
-eos = Eos({httpEndpoint: null, chainId, keyProvider, transactionHeaders})
+rsn = Rsn({httpEndpoint: null, chainId, keyProvider, transactionHeaders})
 
-transfer = await eos.transfer('inita', 'initb', '1.0000 SYS', '')
+transfer = await rsn.transfer('inita', 'initb', '1.0000 RSN', '')
 transferTransaction = transfer.transaction
 
 // ONLINE (bring `transferTransaction`)
 
-eos = Eos(/* {httpEndpoint: 'https://..'} */)
+rsn = Rsn(/* {httpEndpoint: 'https://..'} */)
 
-processedTransaction = await eos.pushTransaction(transferTransaction)
+processedTransaction = await rsn.pushTransaction(transferTransaction)
 ```
 
 #### Custom Token
@@ -441,7 +441,7 @@ processedTransaction = await eos.pushTransaction(transferTransaction)
 ```js
 // more on the contract / transaction syntax
 
-await eos.transaction('myaccount', myaccount => {
+await rsn.transaction('myaccount', myaccount => {
 
   // Create the initial token with its max supply
   // const options = {authorization: 'myaccount'} // default
@@ -451,7 +451,7 @@ await eos.transaction('myaccount', myaccount => {
   myaccount.issue('myaccount', '10000.000 TOK', 'issue')
 })
 
-const balance = await eos.getCurrencyBalance('myaccount', 'myaccount', 'TOK')
+const balance = await rsn.getCurrencyBalance('myaccount', 'myaccount', 'TOK')
 console.log('Currency Balance', balance)
 ```
 
@@ -461,10 +461,10 @@ Other ways to use contracts and transactions.
 
 ```javascript
 // if either transfer fails, both will fail (1 transaction, 2 messages)
-await eos.transaction(eos =>
+await rsn.transaction(rsn =>
   {
-    eos.transfer('inita', 'initb', '1.0000 SYS', ''/*memo*/)
-    eos.transfer('inita', 'initc', '1.0000 SYS', ''/*memo*/)
+    rsn.transfer('inita', 'initb', '1.0000 RSN', ''/*memo*/)
+    rsn.transfer('inita', 'initc', '1.0000 RSN', ''/*memo*/)
     // Returning a promise is optional (but handled as expected)
   }
   // [options],
@@ -472,19 +472,19 @@ await eos.transaction(eos =>
 )
 
 // transaction on a single contract
-await eos.transaction('myaccount', myaccount => {
+await rsn.transaction('myaccount', myaccount => {
   myaccount.transfer('myaccount', 'inita', '10.000 TOK@myaccount', '')
 })
 
 // mix contracts in the same transaction
-await eos.transaction(['myaccount', 'eosio.token'], ({myaccount, eosio_token}) => {
+await rsn.transaction(['myaccount', 'arisen.token'], ({myaccount, arisen_token}) => {
   myaccount.transfer('inita', 'initb', '1.000 TOK@myaccount', '')
-  eosio_token.transfer('inita', 'initb', '1.0000 SYS', '')
+  arisen_token.transfer('inita', 'initb', '1.0000 RSN', '')
 })
 
 // The contract method does not take an array so must be called once for
 // each contract that is needed.
-const myaccount = await eos.contract('myaccount')
+const myaccount = await rsn.contract('myaccount')
 await myaccount.transfer('myaccount', 'inita', '1.000 TOK', '')
 
 // a transaction to a contract instance can specify multiple actions
@@ -496,8 +496,8 @@ await myaccount.transaction(myaccountTr => {
 
 # Development
 
-From time-to-time the eosjs and nodeos binary format will change between releases
-so you may need to start `nodeos` with the `--skip-transaction-signatures` parameter
+From time-to-time the arisenjs and nodrsn binary format will change between releases
+so you may need to start `nodrsn` with the `--skip-transaction-signatures` parameter
 to get your transactions to pass.
 
 Note, `package.json` has a "main" pointing to `./lib`.  The `./lib` folder is for
@@ -505,29 +505,29 @@ es2015 code built in a separate step. If you're changing and testing code,
 import from `./src` instead.
 
 ```javascript
-Eos = require('./src')
+Rsn = require('./src')
 
 // forceActionDataHex = false helps transaction readability but may trigger back-end bugs
 config = {verbose: true, debug: false, broadcast: true, forceActionDataHex: true, keyProvider}
 
-eos = Eos(config)
+rsn = Rsn(config)
 ```
 
 #### Fcbuffer
 
-The `eos` instance can provide serialization:
+The `rsn` instance can provide serialization:
 
 ```javascript
 // 'asset' is a type but could be any struct or type like: transaction or uint8
 type = {type: 1, data: '00ff'}
-buffer = eos.fc.toBuffer('extensions_type', type)
-assert.deepEqual(type, eos.fc.fromBuffer('extensions_type', buffer))
+buffer = rsn.fc.toBuffer('extensions_type', type)
+assert.deepEqual(type, rsn.fc.fromBuffer('extensions_type', buffer))
 
 // ABI Serialization
-eos.contract('eosio.token', (error, eosio_token) => {
-  create = {issuer: 'inita', maximum_supply: '1.0000 SYS'}
-  buffer = eosio_token.fc.toBuffer('create', create)
-  assert.deepEqual(create, eosio_token.fc.fromBuffer('create', buffer))
+rsn.contract('arisen.token', (error, arisen_token) => {
+  create = {issuer: 'inita', maximum_supply: '1.0000 RSN'}
+  buffer = arisen_token.fc.toBuffer('create', create)
+  assert.deepEqual(create, arisen_token.fc.fromBuffer('create', buffer))
 })
 ```
 
@@ -535,35 +535,35 @@ Use Node v10+ for `package-lock.json`.
 
 # Related Libraries
 
-These libraries are integrated into `eosjs` seamlessly so you probably do not
+These libraries are integrated into `arisenjs` seamlessly so you probably do not
 need to use them directly.  They are exported here giving more API access or
 in some cases may be used standalone.
 
 ```javascript
-var {format, api, ecc, json, Fcbuffer} = Eos.modules
+var {format, api, ecc, json, Fcbuffer} = Rsn.modules
 ```
 * format [./format.md](./docs/format.md)
   * Blockchain name validation
   * Asset string formatting
 
-* eosjs-api [[Github](https://github.com/eosio/eosjs-api), [NPM](https://www.npmjs.org/package/eosjs-api)]
-  * Remote API to an EOS blockchain node (nodeos)
+* arisenjs-api [[Github](https://github.com/arisen/arisenjs-api), [NPM](https://www.npmjs.org/package/arisenjs-api)]
+  * Remote API to an Arisen blockchain node (nodrsn)
   * Use this library directly if you need read-only access to the blockchain
     (don't need to sign transactions).
 
-* eosjs-ecc [[Github](https://github.com/eosio/eosjs-ecc), [NPM](https://www.npmjs.org/package/eosjs-ecc)]
+* arisenjs-ecc [[Github](https://github.com/arisen/arisenjs-ecc), [NPM](https://www.npmjs.org/package/arisenjs-ecc)]
   * Private Key, Public Key, Signature, AES, Encryption / Decryption
   * Validate public or private keys
-  * Encrypt or decrypt with EOS compatible checksums
+  * Encrypt or decrypt with Arisen compatible checksums
   * Calculate a shared secret
 
-* json {[api](https://github.com/EOSIO/eosjs-api/blob/master/src/api), [schema](https://github.com/EOSIO/eosjs/blob/master/src/schema)},
+* json {[api](https://github.com/ARISENIO/arisenjs-api/blob/master/src/api), [schema](https://github.com/ARISENIO/arisenjs/blob/master/src/schema)},
   * Blockchain definitions (api method names, blockchain schema)
 
-* eosjs-keygen [[Github](https://github.com/eosio/eosjs-keygen), [NPM](https://www.npmjs.org/package/eosjs-keygen)]
+* arisenjs-keygen [[Github](https://github.com/arisen/arisenjs-keygen), [NPM](https://www.npmjs.org/package/arisenjs-keygen)]
   * private key storage and key management
 
-* Fcbuffer [[Github](https://github.com/eosio/eosjs-fcbuffer), [NPM](https://www.npmjs.org/package/fcbuffer)]
+* Fcbuffer [[Github](https://github.com/arisen/arisenjs-fcbuffer), [NPM](https://www.npmjs.org/package/fcbuffer)]
   * Binary serialization used by the blockchain
   * Clients sign the binary form of the transaction
   * Allows client to know what it is signing
@@ -572,20 +572,20 @@ var {format, api, ecc, json, Fcbuffer} = Eos.modules
 # Browser
 
 ```bash
-git clone https://github.com/EOSIO/eosjs.git
-cd eosjs
+git clone https://github.com/ARISENIO/arisenjs.git
+cd arisenjs
 npm install
 npm run build_browser
-# builds: ./dist/eos.js load with ./dist/index.html
+# builds: ./dist/rsn.js load with ./dist/index.html
 
 npm run build_browser_test
 # builds: ./dist/test.js run with ./dist/test.html
 ```
 
 ```html
-<script src="eos.js"></script>
+<script src="rsn.js"></script>
 <script>
-var eos = Eos()
+var rsn = Rsn()
 //...
 </script>
 ```
