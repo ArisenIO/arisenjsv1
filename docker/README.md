@@ -1,5 +1,5 @@
 Dockerized arisen instance for development and testing.  This container
-is designed to reset its blockchain and wallet state upon shutdown.
+is designed to reset its blockchain and Bank Account State upon shutdown.
 
 # Start aosd
 

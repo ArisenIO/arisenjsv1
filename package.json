@@ -1,6 +1,6 @@
 {
   "name": "arisenjsv1",
-  "version": "1.0.1",
+  "version": "1.0.3",
   "description": "General purpose library for the ARISEN blockchain.",
   "main": "lib/index.js",
   "files": [

@@ -10,7 +10,7 @@
     "base": "",
     "action": {
       "name": "create",
-      "account": "eosio.token"
+      "account": "arisen.token"
     },
     "fields": {
       "issuer": "account_name",
@@ -29,7 +29,7 @@
     "base": "",
     "action": {
       "name": "issue",
-      "account": "eosio.token"
+      "account": "arisen.token"
     },
     "fields": {
       "to": "account_name",
@@ -41,7 +41,7 @@
     "base": "",
     "action": {
       "name": "transfer",
-      "account": "eosio.token"
+      "account": "arisen.token"
     },
     "fields": {
       "from": "account_name",

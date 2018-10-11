@@ -25,7 +25,7 @@ Ways to instantiate arisenjs.
 ```js
 Rsn = require('arisenjs')
 
-// Private key or keys (array) provided statically or by way of a function.
+// Bank Account's Private Key or keys (array) provided statically or by way of a function.
 // For multiple keys, the get_required_keys API is used (more on that below).
 keyProvider: '5KQwrPbwdL6PhXujxW37FSSQZ1JiwsST4cqQzDeyXtP79zkvFD3'
 
@@ -53,7 +53,7 @@ rsn.getBlock()
 ```
 ```json
 USAGE
-getBlock - Fetch a block from the blockchain.
+getBlock - Fetch a block from the decentralized banking network.
 
 PARAMETERS
 {
@@ -115,18 +115,18 @@ config = {
 rsn = Rsn(config)
 ```
 
-* **chainId** `hex` - Unique ID for the blockchain you're connecting too.  This
+* **chainId** `hex` - Unique ID for the decentralized banking network you're connecting too.  This
   is required for valid transaction signing.  The chainId is provided via the
   [get_info](http://ayeaye.cypherglass.com:8888/v1/chain/get_info) API call.
 
   Identifies a chain by its initial genesis block.  All transactions signed will
-  only be valid the blockchain with this chainId.  Verify the chainId for
+  only be valid the decentralized banking network with this chainId.  Verify the chainId for
   security reasons.
 
-* **keyProvider** `[array<string>|string|function]` - Provides private keys
-  used to sign transaction.  If multiple private keys are found, the API
+* **keyProvider** `[array<string>|string|function]` - Provides Bank Account's Private Keys
+  used to sign transaction.  If multiple Bank Account's Private Keys are found, the API
   `get_required_keys` is called to discover which signing keys to use.  If a
-  function is provided, this function is called for each transaction.
+  function is provided, this function is called for Each bank transaction.
 
 * **httpEndpoint** `string` - http or https location of a nodrsnd server
   providing a chain API.  When using arisenjs from a browser remember to configure
@@ -135,25 +135,25 @@ rsn = Rsn(config)
 
   Set this value to **null** for a cold-storage (no network) configuration.
 
-* **expireInSeconds** `number` - number of seconds before the transaction
+* **expireInSeconds** `number` - number of seconds before the bank transaction
   will expire.  The time is based on the nodrsnd's clock.  An unexpired
   transaction that may have had an error is a liability until the expiration
   is reached, this time should be brief.
 
-* **broadcast** `[boolean=true]` - post the transaction to
-  the blockchain.  Use false to obtain a fully signed transaction.
+* **broadcast** `[boolean=true]` - post the bank transaction to
+  the decentralized banking network.  Use false to obtain a fully Signed Bank Transaction.
 
 * **verbose** `[boolean=false]` - verbose logging such as API activity.
 
 * **debug** `[boolean=false]` - low level debug logging (serialization).
 
-* **sign** `[boolean=true]` - sign the transaction with a private key.  Leaving
-  a transaction unsigned avoids the need to provide a private key.
+* **sign** `[boolean=true]` - sign the bank transaction with a Bank Account's Private Key.  Leaving
+  a transaction unsigned avoids the need to provide a Bank Account's Private Key.
 
 * **mockTransactions** (advanced)
   * `mockTransactions: () => null // 'pass',  or 'fail'`
-  * `pass` - do not broadcast, always pretend that the transaction worked
-  * `fail` - do not broadcast, pretend the transaction failed
+  * `pass` - do not broadcast, always pretend that the bank transaction worked
+  * `fail` - do not broadcast, pretend the bank transaction failed
   * `null|undefined` - broadcast as usual
 
 * **transactionHeaders** (advanced) - manually calculate transaction header.  This
@@ -200,15 +200,15 @@ rsn.transfer('alice', 'bob', '1.0000 RSN', '', options)
   an account_name.  The account_name in the 1st field gets added as the
   active key authorization for the action.
 
-* **broadcast** `[boolean=true]` - post the transaction to
-  the blockchain.  Use false to obtain a fully signed transaction.
+* **broadcast** `[boolean=true]` - post the bank transaction to
+  the decentralized banking network.  Use false to obtain a fully Signed Bank Transaction.
 
-* **sign** `[boolean=true]` - sign the transaction with a private key.  Leaving
-  a transaction unsigned avoids the need to provide a private key.
+* **sign** `[boolean=true]` - sign the bank transaction with a Bank Account's Private Key.  Leaving
+  a transaction unsigned avoids the need to provide a Bank Account's Private Key.
 
 ### Transaction
 
-The transaction function accepts the standard blockchain transaction.
+the bank transaction function accepts the standard blockchain transaction.
 
 Required transaction header fields will be added unless your signing without a
 network connection (httpEndpoint == null). In that case provide you own headers:
@@ -363,7 +363,7 @@ rsn = Rsn({keyProvider, binaryen})
 wasm = fs.readFileSync(`docker/contracts/arisen.token/arisen.token.wasm`)
 abi = fs.readFileSync(`docker/contracts/arisen.token/arisen.token.abi`)
 
-// Publish contract to the blockchain
+// Publish contract to the decentralized banking network
 rsn.setcode('myaccount', 0, 0, wasm) // @returns {Promise}
 rsn.setabi('myaccount', JSON.parse(abi)) // @returns {Promise}
 ```
@@ -436,7 +436,7 @@ rsn = Rsn(/* {httpEndpoint: 'https://..'} */)
 processedTransaction = await rsn.pushTransaction(transferTransaction)
 ```
 
-#### Custom Token
+#### Custom Private Currency
 
 ```js
 // more on the contract / transaction syntax
@@ -548,12 +548,12 @@ var {format, api, ecc, json, Fcbuffer} = Rsn.modules
 
 * arisenjs-api [[Github](https://github.com/arisen/arisenjs-api), [NPM](https://www.npmjs.org/package/arisenjs-api)]
   * Remote API to an Arisen blockchain node (nodrsn)
-  * Use this library directly if you need read-only access to the blockchain
+  * Use this library directly if you need read-only access to the decentralized banking network
     (don't need to sign transactions).
 
 * arisenjs-ecc [[Github](https://github.com/arisen/arisenjs-ecc), [NPM](https://www.npmjs.org/package/arisenjs-ecc)]
-  * Private Key, Public Key, Signature, AES, Encryption / Decryption
-  * Validate public or private keys
+  * Bank Account's Private Key, Public Key, Signature, AES, Encryption / Decryption
+  * Validate public or Bank Account's Private Keys
   * Encrypt or decrypt with Arisen compatible checksums
   * Calculate a shared secret
 
@@ -561,11 +561,11 @@ var {format, api, ecc, json, Fcbuffer} = Rsn.modules
   * Blockchain definitions (api method names, blockchain schema)
 
 * arisenjs-keygen [[Github](https://github.com/arisen/arisenjs-keygen), [NPM](https://www.npmjs.org/package/arisenjs-keygen)]
-  * private key storage and key management
+  * Bank Account's Private Key storage and key management
 
 * Fcbuffer [[Github](https://github.com/arisen/arisenjs-fcbuffer), [NPM](https://www.npmjs.org/package/fcbuffer)]
-  * Binary serialization used by the blockchain
-  * Clients sign the binary form of the transaction
+  * Binary serialization used by the decentralized banking network
+  * Clients sign the binary form of the bank transaction
   * Allows client to know what it is signing
 
 

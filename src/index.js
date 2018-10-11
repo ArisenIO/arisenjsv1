@@ -136,11 +136,11 @@ function throwOnDuplicate(o1, o2, msg) {
 
 /**
   The default sign provider is designed to interact with the available public
-  keys (maybe just one), the transaction, and the blockchain to figure out
+  keys (maybe just one), the bank transaction, and the decentralized banking network to figure out
   the minimum set of signing keys.
 
-  If only one key is available, the blockchain API calls are skipped and that
-  key is used to sign the transaction.
+  If only one key is available, the decentralized banking network API calls are skipped and that
+  key is used to sign the bank transaction.
 */
 const defaultSignProvider = (eos, config) => async function({sign, buf, transaction}) {
   const {keyProvider} = config
@@ -169,7 +169,7 @@ const defaultSignProvider = (eos, config) => async function({sign, buf, transact
       // normalize format (EOSKey => PUB_K1_base58publicKey)
       return {public: ecc.PublicKey(key).toString()}
     }
-    assert(false, 'expecting public or private keys from keyProvider')
+    assert(false, 'expecting public or Bank Account's Private Keys from keyProvider')
   })
 
   if(!keys.length) {
@@ -193,7 +193,7 @@ const defaultSignProvider = (eos, config) => async function({sign, buf, transact
 
   const keyMap = new Map()
 
-  // keys are either public or private keys
+  // keys are either public or Bank Account's Private Keys
   for(const key of keys) {
     const isPrivate = key.private != null
     const isPublic = key.public != null
@@ -228,7 +228,7 @@ const defaultSignProvider = (eos, config) => async function({sign, buf, transact
 
     if(missingKeys.length !== 0) {
       assert(typeof keyProvider === 'function',
-        'keyProvider function is needed for private key lookup')
+        'keyProvider function is needed for Bank Account's Private Key lookup')
 
       // const pubkeys = missingKeys.map(key => ecc.PublicKey(key).toStringLegacy())
       keyProvider({pubkeys: missingKeys})

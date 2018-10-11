@@ -198,8 +198,8 @@ if(process.env['NODE_ENV'] === 'development') {
       rsn.transfer()
     })
 
-    // A keyProvider can return private keys directly..
-    it('keyProvider private key', () => {
+    // A keyProvider can return Bank Account's Private Keys directly..
+    it('keyProvider Bank Account's Private Key', () => {
 
       // keyProvider should return an array of keys
       const keyProvider = () => {
@@ -214,7 +214,7 @@ if(process.env['NODE_ENV'] === 'development') {
       })
     })
 
-    it('keyProvider multiple private keys (get_required_keys)', () => {
+    it('keyProvider multiple Bank Account's Private Keys (get_required_keys)', () => {
 
       // keyProvider should return an array of keys
       const keyProvider = () => {
@@ -233,8 +233,8 @@ if(process.env['NODE_ENV'] === 'development') {
     })
 
     // If a keystore is used, the keyProvider should return available
-    // public keys first then respond with private keys next.
-    it('keyProvider public keys then private key', () => {
+    // public keys first then respond with Bank Account's Private Keys next.
+    it('keyProvider public keys then Bank Account's Private Key', () => {
       const pubkey = ecc.privateToPublic(wif)
 
       // keyProvider should return a string or array of keys.
@@ -344,7 +344,7 @@ if(process.env['NODE_ENV'] === 'development') {
       return rsn.transfer('inita', 'initb', '1.0000 RSN', '')
     })
 
-    it('transfer custom token precision (broadcast)', () => {
+    it('transfer Custom Private Currency precision (broadcast)', () => {
       const rsn = Rsn({signProvider})
       return rsn.transfer('inita', 'initb', '1.618 PHI', '')
     })
