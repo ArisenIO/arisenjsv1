@@ -4,7 +4,7 @@ const fs = require('fs')
 
 const Rsn = require('.')
 const {ecc} = Rsn.modules
-const {Keystore} = require('rsnjs-keygen')
+const {Keystore} = require('arisenjs-keygen')
 
 const wif = '5KQwrPbwdL6PhXujxW37FSSQZ1JiwsST4cqQzDeyXtP79zkvFD3'
 
@@ -77,7 +77,7 @@ describe('offline', () => {
     })
 
     const memo = ''
-    const trx = await rsn.transfer('few', 'many', '100.0000 RSN', memo)
+    const trx = await rsn.transfer('few', 'many', '100.0000 RIX', memo)
 
     assert.deepEqual({
       expiration: trx.transaction.transaction.expiration,
@@ -129,7 +129,7 @@ if(process.env['NODE_ENV'] === 'development') {
       const opts = {sign: false, broadcast: false}
       const tx = await local.transaction(['currency', 'arisen.token'], ({currency, arisen_token}) => {
         // make sure {account: 'arisen.token', ..} remains first
-        arisen_token.transfer('inita', 'initd', '1.1000 RSN', '')
+        arisen_token.transfer('inita', 'initd', '1.1000 RIX', '')
 
         // {account: 'currency', ..} remains second (reverse sort)
         currency.transfer('inita', 'initd', '1.2000 CUR', '')
@@ -199,7 +199,7 @@ if(process.env['NODE_ENV'] === 'development') {
     })
 
     // A keyProvider can return Bank Account's Private Keys directly..
-    it('keyProvider Bank Account's Private Key', () => {
+    it("keyProvider Bank Account's Private Key", () => {
 
       // keyProvider should return an array of keys
       const keyProvider = () => {
@@ -208,13 +208,13 @@ if(process.env['NODE_ENV'] === 'development') {
 
       const rsn = Rsn({keyProvider})
 
-      return rsn.transfer('inita', 'initb', '1.0000 RSN', '', false).then(tr => {
+      return rsn.transfer('inita', 'initb', '1.0000 RIX', '', false).then(tr => {
         assert.equal(tr.transaction.signatures.length, 1)
         assert.equal(typeof tr.transaction.signatures[0], 'string')
       })
     })
 
-    it('keyProvider multiple Bank Account's Private Keys (get_required_keys)', () => {
+    it("keyProvider multiple Bank Account's Private Keys (get_required_keys)", () => {
 
       // keyProvider should return an array of keys
       const keyProvider = () => {
@@ -226,7 +226,7 @@ if(process.env['NODE_ENV'] === 'development') {
 
       const rsn = Rsn({keyProvider})
 
-      return rsn.transfer('inita', 'initb', '1.2740 RSN', '', false).then(tr => {
+      return rsn.transfer('inita', 'initb', '1.2740 RIX', '', false).then(tr => {
         assert.equal(tr.transaction.signatures.length, 1)
         assert.equal(typeof tr.transaction.signatures[0], 'string')
       })
@@ -234,7 +234,7 @@ if(process.env['NODE_ENV'] === 'development') {
 
     // If a keystore is used, the keyProvider should return available
     // public keys first then respond with Bank Account's Private Keys next.
-    it('keyProvider public keys then Bank Account's Private Key', () => {
+    it("keyProvider public keys then Bank Account's Private Key", () => {
       const pubkey = ecc.privateToPublic(wif)
 
       // keyProvider should return a string or array of keys.
@@ -253,22 +253,22 @@ if(process.env['NODE_ENV'] === 'development') {
 
       const rsn = Rsn({keyProvider})
 
-      return rsn.transfer('inita', 'initb', '9.0000 RSN', '', false).then(tr => {
+      return rsn.transfer('inita', 'initb', '9.0000 RIX', '', false).then(tr => {
         assert.equal(tr.transaction.signatures.length, 1)
         assert.equal(typeof tr.transaction.signatures[0], 'string')
       })
     })
 
-    it('keyProvider from rsnjs-keygen', () => {
+    it('keyProvider from arisenjs-keygen', () => {
       const keystore = Keystore('uid')
       keystore.deriveKeys({parent: wif})
       const rsn = Rsn({keyProvider: keystore.keyProvider})
-      return rsn.transfer('inita', 'initb', '12.0000 RSN', '', true)
+      return rsn.transfer('inita', 'initb', '12.0000 RIX', '', true)
     })
 
     it('keyProvider return Promise', () => {
       const rsn = Rsn({keyProvider: new Promise(resolve => {resolve(wif)})})
-      return rsn.transfer('inita', 'initb', '1.6180 RSN', '', true)
+      return rsn.transfer('inita', 'initb', '1.6180 RIX', '', true)
     })
 
     it('signProvider', () => {
@@ -284,7 +284,7 @@ if(process.env['NODE_ENV'] === 'development') {
         })
       }
       const rsn = Rsn({signProvider: customSignProvider})
-      return rsn.transfer('inita', 'initb', '2.0000 RSN', '', false)
+      return rsn.transfer('inita', 'initb', '2.0000 RIX', '', false)
     })
 
     it('create asset', async function() {
@@ -317,8 +317,8 @@ if(process.env['NODE_ENV'] === 'development') {
         tr.delegatebw({
           from: 'arisen',
           receiver: name,
-          stake_net_quantity: '10.0000 RSN',
-          stake_cpu_quantity: '10.0000 RSN',
+          stake_net_quantity: '10.0000 RIX',
+          stake_cpu_quantity: '10.0000 RIX',
           transfer: 0
         })
       })
@@ -326,7 +326,7 @@ if(process.env['NODE_ENV'] === 'development') {
 
     it('mockTransactions pass', () => {
       const rsn = Rsn({signProvider, mockTransactions: 'pass'})
-      return rsn.transfer('inita', 'initb', '1.0000 RSN', '').then(transfer => {
+      return rsn.transfer('inita', 'initb', '1.0000 RIX', '').then(transfer => {
         assert(transfer.mockTransaction, 'transfer.mockTransaction')
       })
     })
@@ -334,14 +334,14 @@ if(process.env['NODE_ENV'] === 'development') {
     it('mockTransactions fail', () => {
       const logger = { error: null }
       const rsn = Rsn({signProvider, mockTransactions: 'fail', logger})
-      return rsn.transfer('inita', 'initb', '1.0000 RSN', '').catch(error => {
+      return rsn.transfer('inita', 'initb', '1.0000 RIX', '').catch(error => {
         assert(error.indexOf('fake error') !== -1, 'expecting: fake error')
       })
     })
 
     it('transfer (broadcast)', () => {
       const rsn = Rsn({signProvider})
-      return rsn.transfer('inita', 'initb', '1.0000 RSN', '')
+      return rsn.transfer('inita', 'initb', '1.0000 RIX', '')
     })
 
     it('transfer Custom Private Currency precision (broadcast)', () => {
@@ -351,12 +351,12 @@ if(process.env['NODE_ENV'] === 'development') {
 
     it('transfer custom authorization (broadcast)', () => {
       const rsn = Rsn({signProvider})
-      return rsn.transfer('inita', 'initb', '1.0000 RSN', '', {authorization: 'inita@owner'})
+      return rsn.transfer('inita', 'initb', '1.0000 RIX', '', {authorization: 'inita@owner'})
     })
 
     it('transfer custom authorization sorting (no broadcast)', () => {
       const rsn = Rsn({signProvider})
-      return rsn.transfer('inita', 'initb', '1.0000 RSN', '',
+      return rsn.transfer('inita', 'initb', '1.0000 RIX', '',
         {authorization: ['initb@owner', 'inita@owner'], broadcast: false}
       ).then(({transaction}) => {
         const ans = [
@@ -369,20 +369,20 @@ if(process.env['NODE_ENV'] === 'development') {
 
     it('transfer (no broadcast)', () => {
       const rsn = Rsn({signProvider})
-      return rsn.transfer('inita', 'initb', '1.0000 RSN', '', {broadcast: false})
+      return rsn.transfer('inita', 'initb', '1.0000 RIX', '', {broadcast: false})
     })
 
     it('transfer (no broadcast, no sign)', () => {
       const rsn = Rsn({signProvider})
       const opts = {broadcast: false, sign: false}
-      return rsn.transfer('inita', 'initb', '1.0000 RSN', '', opts).then(tr =>
+      return rsn.transfer('inita', 'initb', '1.0000 RIX', '', opts).then(tr =>
         assert.deepEqual(tr.transaction.signatures, [])
       )
     })
 
     it('transfer sign promise (no broadcast)', () => {
       const rsn = Rsn({signProvider: promiseSigner})
-      return rsn.transfer('inita', 'initb', '1.0000 RSN', '', false)
+      return rsn.transfer('inita', 'initb', '1.0000 RIX', '', false)
     })
 
     it('action to unknown contract', done => {
@@ -396,12 +396,12 @@ if(process.env['NODE_ENV'] === 'development') {
 
     it('action to contract', () => {
       return Rsn({signProvider}).contract('arisen.token').then(token => {
-        return token.transfer('inita', 'initb', '1.0000 RSN', '')
+        return token.transfer('inita', 'initb', '1.0000 RIX', '')
           // transaction sent on each command
           .then(tr => {
             assert.equal(1, tr.transaction.transaction.actions.length)
 
-            return token.transfer('initb', 'inita', '1.0000 RSN', '')
+            return token.transfer('initb', 'inita', '1.0000 RIX', '')
               .then(tr => {assert.equal(1, tr.transaction.transaction.actions.length)})
           })
       }).then(r => {assert(r == undefined)})
@@ -412,8 +412,8 @@ if(process.env['NODE_ENV'] === 'development') {
       const rsn = Rsn({signProvider})
 
       const trTest = arisen_token => {
-        assert(arisen_token.transfer('inita', 'initb', amt + '.0000 RSN', '') == null)
-        assert(arisen_token.transfer('initb', 'inita', (amt++) + '.0000 RSN', '') == null)
+        assert(arisen_token.transfer('inita', 'initb', amt + '.0000 RIX', '') == null)
+        assert(arisen_token.transfer('initb', 'inita', (amt++) + '.0000 RIX', '') == null)
       }
 
       const assertTr = tr =>{
@@ -430,10 +430,10 @@ if(process.env['NODE_ENV'] === 'development') {
       const tn = Rsn({signProvider})
       return tn.contract('arisen.token').then(arisen_token => {
         return arisen_token.transaction(tr => {
-          tr.transfer('inita', 'initb', '1.0000 RSN', '')
-          tr.transfer('inita', 'initc', '2.0000 RSN', '')
+          tr.transfer('inita', 'initb', '1.0000 RIX', '')
+          tr.transfer('inita', 'initc', '2.0000 RIX', '')
         }).then(() => {
-          return arisen_token.transfer('inita', 'initb', '3.0000 RSN', '')
+          return arisen_token.transfer('inita', 'initb', '3.0000 RIX', '')
         })
       })
     })
@@ -441,8 +441,8 @@ if(process.env['NODE_ENV'] === 'development') {
     it('multi-action transaction (broadcast)', () => {
       const rsn = Rsn({signProvider})
       return rsn.transaction(tr => {
-        assert(tr.transfer('inita', 'initb', '1.0000 RSN', '') == null)
-        assert(tr.transfer({from: 'inita', to: 'initc', quantity: '1.0000 RSN', memo: ''}) == null)
+        assert(tr.transfer('inita', 'initb', '1.0000 RIX', '') == null)
+        assert(tr.transfer({from: 'inita', to: 'initc', quantity: '1.0000 RIX', memo: ''}) == null)
       }).then(tr => {
         assert.equal(2, tr.transaction.transaction.actions.length)
       })
@@ -451,7 +451,7 @@ if(process.env['NODE_ENV'] === 'development') {
     it('multi-action transaction no inner callback', () => {
       const rsn = Rsn({signProvider})
       return rsn.transaction(tr => {
-        tr.transfer('inita', 'inita', '1.0000 RSN', '', cb => {})
+        tr.transfer('inita', 'inita', '1.0000 RIX', '', cb => {})
       })
       .then(() => {throw 'expecting rollback'})
       .catch(error => {
@@ -488,7 +488,7 @@ if(process.env['NODE_ENV'] === 'development') {
               data: {
                 from: 'inita',
                 to: 'initb',
-                quantity: '13.0000 RSN',
+                quantity: '13.0000 RIX',
                 memo: '爱'
               },
               authorization: [{

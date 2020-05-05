@@ -57,21 +57,21 @@ describe('shorthand', () => {
     const rsn = Rsn()
     const {types} = rsn.fc
     const Symbol = types.symbol()
-    assertSerializer(Symbol, '4,RSN', '4,RSN', 'RSN')
+    assertSerializer(Symbol, '4,RIX', '4,RIX', 'RIX')
   })
 
   it('extended_symbol', () => {
     const rsn = Rsn({defaults: true})
     const esType = rsn.fc.types.extended_symbol()
     // const esString = esType.toObject()
-    assertSerializer(esType, '4,RSN@contract')
+    assertSerializer(esType, '4,RIX@contract')
   })
 
   it('asset', () => {
     const rsn = Rsn()
     const {types} = rsn.fc
     const aType = types.asset()
-    assertSerializer(aType, '1.0001 RSN')
+    assertSerializer(aType, '1.0001 RIX')
   })
 
   it('extended_asset', () => {
@@ -119,7 +119,7 @@ describe('Action.data', () => {
       data: {
         from: 'inita',
         to: 'initb',
-        quantity: '1.0000 RSN',
+        quantity: '1.0000 RIX',
         memo: ''
       },
       authorization: []
@@ -136,7 +136,7 @@ describe('Action.data', () => {
       data: {
         from: 'inita',
         to: 'initb',
-        quantity: '1.0000 RSN',
+        quantity: '1.0000 RIX',
         memo: ''
       },
       authorization: []

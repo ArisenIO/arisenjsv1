@@ -1,4 +1,4 @@
-const {Signature, PublicKey} = require('rsnjs-ecc')
+const {Signature, PublicKey} = require('arisenjs-ecc')
 const Fcbuffer = require('fcbuffer')
 const ByteBuffer = require('bytebuffer')
 const assert = require('assert')
@@ -11,7 +11,7 @@ const {
   printAsset, parseAsset
 } = require('./format')
 
-/** Configures Fcbuffer for RSN specific structs and types. */
+/** Configures Fcbuffer for RIX specific structs and types. */
 module.exports = (config = {}, extendedSchema) => {
   const structLookup = (lookupName, account) => {
     const cachedCode = new Set(['arisen', 'arisen.token', 'arisen.null'])

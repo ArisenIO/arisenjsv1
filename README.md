@@ -13,7 +13,7 @@ General purpose library for Arisen blockchains.
 
 Upgrade notes:
 * Converted some types in **format** module from unsigned to signed: UDecimalPad -> DecimalPad for example (15.0.1)
-* All `asset` and `extended_asset` amounts require exact decimal places (Change `1 RSN` to `1.0000 RSN`) (15.0.0)
+* All `asset` and `extended_asset` amounts require exact decimal places (Change `1 RIX` to `1.0000 RIX`) (15.0.0)
 * Use `config.verbose` instead of `config.debug` (14.1.0)
 
 Prior [version](./docs/prior_versions.md) matrix.
@@ -185,7 +185,7 @@ options = {
 ```
 
 ```js
-rsn.transfer('alice', 'bob', '1.0000 RSN', '', options)
+rsn.transfer('alice', 'bob', '1.0000 RIX', '', options)
 ```
 
 * **authorization** `[array<auth>|auth]` - identifies the
@@ -240,7 +240,7 @@ rsn.transaction(
         data: {
           from: 'inita',
           to: 'initb',
-          quantity: '7.0000 RSN',
+          quantity: '7.0000 RIX',
           memo: ''
         }
       }
@@ -260,20 +260,20 @@ more frequently.  This avoids having lots of JSON in the code.
 rsn.transfer()
 
 // Callback is last, when omitted a promise is returned
-rsn.transfer('inita', 'initb', '1.0000 RSN', '', (error, result) => {})
-rsn.transfer('inita', 'initb', '1.1000 RSN', '') // @returns {Promise}
+rsn.transfer('inita', 'initb', '1.0000 RIX', '', (error, result) => {})
+rsn.transfer('inita', 'initb', '1.1000 RIX', '') // @returns {Promise}
 
 // positional parameters
-rsn.transfer('inita', 'initb', '1.2000 RSN', '')
+rsn.transfer('inita', 'initb', '1.2000 RIX', '')
 
 // named parameters
-rsn.transfer({from: 'inita', to: 'initb', quantity: '1.3000 RSN', memo: ''})
+rsn.transfer({from: 'inita', to: 'initb', quantity: '1.3000 RIX', memo: ''})
 
 // options appear after parameters
 options = {broadcast: true, sign: true}
 
 // `false` is a shortcut for {broadcast: false}
-rsn.transfer('inita', 'initb', '1.4000 RSN', '', false)
+rsn.transfer('inita', 'initb', '1.4000 RIX', '', false)
 ```
 
 Read-write API methods and documentation are generated from the arisen
@@ -329,8 +329,8 @@ rsn.transaction(tr => {
   tr.delegatebw({
     from: 'arisen',
     receiver: 'myaccount',
-    stake_net_quantity: '10.0000 RSN',
-    stake_cpu_quantity: '10.0000 RSN',
+    stake_net_quantity: '10.0000 RIX',
+    stake_cpu_quantity: '10.0000 RIX',
     transfer: 0
   })
 })
@@ -426,7 +426,7 @@ transactionHeaders = {
 // All keys in keyProvider will sign.
 rsn = Rsn({httpEndpoint: null, chainId, keyProvider, transactionHeaders})
 
-transfer = await rsn.transfer('inita', 'initb', '1.0000 RSN', '')
+transfer = await rsn.transfer('inita', 'initb', '1.0000 RIX', '')
 transferTransaction = transfer.transaction
 
 // ONLINE (bring `transferTransaction`)
@@ -463,8 +463,8 @@ Other ways to use contracts and transactions.
 // if either transfer fails, both will fail (1 transaction, 2 messages)
 await rsn.transaction(rsn =>
   {
-    rsn.transfer('inita', 'initb', '1.0000 RSN', ''/*memo*/)
-    rsn.transfer('inita', 'initc', '1.0000 RSN', ''/*memo*/)
+    rsn.transfer('inita', 'initb', '1.0000 RIX', ''/*memo*/)
+    rsn.transfer('inita', 'initc', '1.0000 RIX', ''/*memo*/)
     // Returning a promise is optional (but handled as expected)
   }
   // [options],
@@ -479,7 +479,7 @@ await rsn.transaction('myaccount', myaccount => {
 // mix contracts in the same transaction
 await rsn.transaction(['myaccount', 'arisen.token'], ({myaccount, arisen_token}) => {
   myaccount.transfer('inita', 'initb', '1.000 TOK@myaccount', '')
-  arisen_token.transfer('inita', 'initb', '1.0000 RSN', '')
+  arisen_token.transfer('inita', 'initb', '1.0000 RIX', '')
 })
 
 // The contract method does not take an array so must be called once for
@@ -525,7 +525,7 @@ assert.deepEqual(type, rsn.fc.fromBuffer('extensions_type', buffer))
 
 // ABI Serialization
 rsn.contract('arisen.token', (error, arisen_token) => {
-  create = {issuer: 'inita', maximum_supply: '1.0000 RSN'}
+  create = {issuer: 'inita', maximum_supply: '1.0000 RIX'}
   buffer = arisen_token.fc.toBuffer('create', create)
   assert.deepEqual(create, arisen_token.fc.fromBuffer('create', buffer))
 })

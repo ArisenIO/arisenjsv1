@@ -1,6 +1,6 @@
 const ecc = require('arisenjs-ecc')
 const Fcbuffer = require('fcbuffer')
-const RsnApi = require('eosjs-api')
+const RsnApi = require('arisenjs-api')
 const assert = require('assert')
 
 const Structs = require('./structs')
@@ -12,7 +12,7 @@ const pkg = require('../package.json')
 
 const Rsn = (config = {}) => {
   config = Object.assign({}, {
-    httpEndpoint: 'http://127.0.0.1:8888',
+    httpEndpoint: 'https://greatchains.arisennodes.io',
     debug: false,
     verbose: false,
     broadcast: true,
@@ -169,7 +169,7 @@ const defaultSignProvider = (eos, config) => async function({sign, buf, transact
       // normalize format (EOSKey => PUB_K1_base58publicKey)
       return {public: ecc.PublicKey(key).toString()}
     }
-    assert(false, 'expecting public or Bank Account's Private Keys from keyProvider')
+    assert(false, "expecting public or Bank Account's Private Keys from keyProvider")
   })
 
   if(!keys.length) {
@@ -228,7 +228,7 @@ const defaultSignProvider = (eos, config) => async function({sign, buf, transact
 
     if(missingKeys.length !== 0) {
       assert(typeof keyProvider === 'function',
-        'keyProvider function is needed for Bank Account's Private Key lookup')
+        "keyProvider function is needed for Bank Account's Private Key lookup")
 
       // const pubkeys = missingKeys.map(key => ecc.PublicKey(key).toStringLegacy())
       keyProvider({pubkeys: missingKeys})

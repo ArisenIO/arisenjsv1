@@ -36,13 +36,13 @@ arisecli Create Bank Account arisen arisen.stake $owner_pubkey $active_pubkey
 arisecli Create Bank Account arisen arisen.token $owner_pubkey $active_pubkey
 arisecli Create Bank Account arisen arisen.vpay $owner_pubkey $active_pubkey
 
-# Deploy, create and issue RSN private and sovereign currency to arisen.token
+# Deploy, create and issue RIX private and sovereign currency to arisen.token
 # arisecli Create Bank Account arisen arisen.token $owner_pubkey $active_pubkey
 arisecli set contract arisen.token contracts/arisen.token -p arisen.token@active
 arisecli push action arisen.token create\
-  '{"issuer":"arisen.token", "maximum_supply": "1000000000.0000 RSN"}' -p arisen.token@active
+  '{"issuer":"arisen.token", "maximum_supply": "1000000000.0000 RIX"}' -p arisen.token@active
 arisecli push action arisen.token issue\
-  '{"to":"arisen.token", "quantity": "10000.0000 RSN", "memo": "issue"}' -p arisen.token@active
+  '{"to":"arisen.token", "quantity": "10000.0000 RIX", "memo": "issue"}' -p arisen.token@active
 
 
 # Either the arisen.bios or arisen.system contract may be deployed to the arisen
@@ -51,11 +51,11 @@ arisecli push action arisen.token issue\
 # arisen.* accounts  allowed only until arisen.system is deployed
 arisecli set contract arisen contracts/arisen.bios -p arisen@active
 
-# RSN (main token)
-arisecli transfer arisen.token arisen '1000 RSN'
-arisecli transfer arisen.token inita '1000 RSN'
-arisecli transfer arisen.token initb '1000 RSN'
-arisecli transfer arisen.token initc '1000 RSN'
+# RIX (main token)
+arisecli transfer arisen.token arisen '1000 RIX'
+arisecli transfer arisen.token inita '1000 RIX'
+arisecli transfer arisen.token initb '1000 RIX'
+arisecli transfer arisen.token initc '1000 RIX'
 
 # User-issued asset
 arisecli push action arisen.token create\
