@@ -7,9 +7,9 @@ General purpose library for Arisen blockchains.
 
 ### Versions
 
-| [ARISENIO/arisenjs](/ARISENIO/arisenjs) | [Npm](https://www.npmjs.com/package/arisenjs) | [ARISENIO/rsn](https://github.com/ARISENIO/rsn) | [Docker Hub](https://hub.docker.com/r/arisen/rsn/) |
+| [ARISENIO/arisenjs](/ARISENIO/arisenjs) | [Npm](https://www.npmjs.com/package/arisenjs) | [ARISENIO/arisen](https://github.com/ARISENIO/arisen) | [Docker Hub](https://hub.docker.com/r/arisen/arisen/) |
 | --- | --- | --- | --- |
-| tag: 15.0.2 | `npm install arisenjs` (version 15) | tag: v1.0.6 | arisen/rsn:v1.0.6 |
+| tag: 1.0.7 | `npm install arisenjs` (version 1) | tag: v1.0.6 | arisen/arisen:v1.0.6 |
 
 Upgrade notes:
 * Converted some types in **format** module from unsigned to signed: UDecimalPad -> DecimalPad for example (15.0.1)
@@ -23,37 +23,37 @@ Prior [version](./docs/prior_versions.md) matrix.
 Ways to instantiate arisenjs.
 
 ```js
-Rsn = require('arisenjs')
+Arisen = require('arisenjs')
 
-// Bank Account's Private Key or keys (array) provided statically or by way of a function.
+// ARISEN account's Private Key or keys (array) provided statically or by way of a function.
 // For multiple keys, the get_required_keys API is used (more on that below).
 keyProvider: '5KQwrPbwdL6PhXujxW37FSSQZ1JiwsST4cqQzDeyXtP79zkvFD3'
 
 // Localhost Testnet (run ./docker/up.sh)
-rsn = Rsn({keyProvider})
+arisen = Arisen({keyProvider})
 
 // Connect to a testnet or mainnet
-rsn = Rsn({httpEndpoint, chainId, keyProvider})
+arisen = Arisen({httpEndpoint, chainId, keyProvider})
 
 // Cold-storage
-rsn = Rsn({httpEndpoint: null, chainId, keyProvider})
+arisen = Arisen({httpEndpoint: null, chainId, keyProvider})
 
 // Read-only instance when 'arisenjs' is already a dependency
-rsn = Rsn.modules.api({/*config*/})
+arisen = Arisen.modules.api({/*config*/})
 
 // Read-only instance when an application never needs to write (smaller library)
 RsnApi = require('arisenjs-api')
-rsn = RsnApi({/*config*/})
+arisen = RsnApi({/*config*/})
 ```
 
 No-arguments prints usage.
 
 ```js
-rsn.getBlock()
+arisen.getBlock()
 ```
 ```json
 USAGE
-getBlock - Fetch a block from the decentralized banking network.
+getBlock - Fetch a block from the ARISEN network.
 
 PARAMETERS
 {
@@ -72,20 +72,20 @@ All functions read only or transactional follow this pattern for parameters.
 
 ```js
 // If the last argument is a function it is treated as a callback
-rsn.getBlock(1, (error, result) => {})
+arisen.getBlock(1, (error, result) => {})
 
 // If a callback is not provided, a Promise is returned
-rsn.getBlock(1) // @returns {Promise}
+arisen.getBlock(1) // @returns {Promise}
 
 // Parameters can be positional or an object
-rsn.getBlock({block_num_or_id: 1})
+arisen.getBlock({block_num_or_id: 1})
 
 // An API with no parameters is invoked with an empty object or callback (avoids logging usage)
-rsn.getInfo({}) // @returns {Promise}
-rsn.getInfo((error, result) => { console.log(error, result) })
+arisen.getInfo({}) // @returns {Promise}
+arisen.getInfo((error, result) => { console.log(error, result) })
 ```
 
-Chain and history API functions are available after creating the `rsn` object.
+Chain and history API functions are available after creating the `arisen` object.
 API methods and documentation are generated from the chain and history json files.
 
 * [chain.json](https://github.com/ARISENIO/arisenjs-api/blob/master/src/api/v1/chain.json)
@@ -94,12 +94,12 @@ API methods and documentation are generated from the chain and history json file
 Until we generate a markdown for these, please convert the names in these
 json to camel case functions.
 
-* `"get_info": ..` is `rsn.getInfo(..)`
+* `"get_info": ..` is `arisen.getInfo(..)`
 
 ### Configuration
 
 ```js
-Rsn = require('arisenjs')
+Arisen = require('arisenjs')
 
 // Default configuration (additional options below)
 config = {
@@ -112,19 +112,19 @@ config = {
   sign: true
 }
 
-rsn = Rsn(config)
+arisen = Arisen(config)
 ```
 
-* **chainId** `hex` - Unique ID for the decentralized banking network you're connecting too.  This
+* **chainId** `hex` - Unique ID for the ARISEN network you're connecting too.  This
   is required for valid transaction signing.  The chainId is provided via the
   [get_info](http://ayeaye.cypherglass.com:8888/v1/chain/get_info) API call.
 
   Identifies a chain by its initial genesis block.  All transactions signed will
-  only be valid the decentralized banking network with this chainId.  Verify the chainId for
+  only be valid the ARISEN network with this chainId.  Verify the chainId for
   security reasons.
 
-* **keyProvider** `[array<string>|string|function]` - Provides Bank Account's Private Keys
-  used to sign transaction.  If multiple Bank Account's Private Keys are found, the API
+* **keyProvider** `[array<string>|string|function]` - Provides ARISEN account's Private Keys
+  used to sign transaction.  If multiple ARISEN account's Private Keys are found, the API
   `get_required_keys` is called to discover which signing keys to use.  If a
   function is provided, this function is called for Each bank transaction.
 
@@ -141,14 +141,14 @@ rsn = Rsn(config)
   is reached, this time should be brief.
 
 * **broadcast** `[boolean=true]` - post the bank transaction to
-  the decentralized banking network.  Use false to obtain a fully Signed Bank Transaction.
+  the ARISEN network.  Use false to obtain a fully Signed ARISEN Transaction.
 
 * **verbose** `[boolean=false]` - verbose logging such as API activity.
 
 * **debug** `[boolean=false]` - low level debug logging (serialization).
 
-* **sign** `[boolean=true]` - sign the bank transaction with a Bank Account's Private Key.  Leaving
-  a transaction unsigned avoids the need to provide a Bank Account's Private Key.
+* **sign** `[boolean=true]` - sign the bank transaction with a ARISEN account's Private Key.  Leaving
+  a transaction unsigned avoids the need to provide a ARISEN account's Private Key.
 
 * **mockTransactions** (advanced)
   * `mockTransactions: () => null // 'pass',  or 'fail'`
@@ -185,7 +185,7 @@ options = {
 ```
 
 ```js
-rsn.transfer('alice', 'bob', '1.0000 RIX', '', options)
+arisen.transfer('alice', 'bob', '1.0000 RIX', '', options)
 ```
 
 * **authorization** `[array<auth>|auth]` - identifies the
@@ -201,10 +201,10 @@ rsn.transfer('alice', 'bob', '1.0000 RIX', '', options)
   active key authorization for the action.
 
 * **broadcast** `[boolean=true]` - post the bank transaction to
-  the decentralized banking network.  Use false to obtain a fully Signed Bank Transaction.
+  the ARISEN network.  Use false to obtain a fully Signed ARISEN Transaction.
 
-* **sign** `[boolean=true]` - sign the bank transaction with a Bank Account's Private Key.  Leaving
-  a transaction unsigned avoids the need to provide a Bank Account's Private Key.
+* **sign** `[boolean=true]` - sign the bank transaction with a ARISEN account's Private Key.  Leaving
+  a transaction unsigned avoids the need to provide a ARISEN account's Private Key.
 
 ### Transaction
 
@@ -226,7 +226,7 @@ Create and send (broadcast) a transaction:
 
 ```javascript
 /** @return {Promise} */
-rsn.transaction(
+arisen.transaction(
   {
     // ...headers,
     actions: [
@@ -257,23 +257,23 @@ more frequently.  This avoids having lots of JSON in the code.
 
 ```javascript
 // Run with no arguments to print usage.
-rsn.transfer()
+arisen.transfer()
 
 // Callback is last, when omitted a promise is returned
-rsn.transfer('inita', 'initb', '1.0000 RIX', '', (error, result) => {})
-rsn.transfer('inita', 'initb', '1.1000 RIX', '') // @returns {Promise}
+arisen.transfer('inita', 'initb', '1.0000 RIX', '', (error, result) => {})
+arisen.transfer('inita', 'initb', '1.1000 RIX', '') // @returns {Promise}
 
 // positional parameters
-rsn.transfer('inita', 'initb', '1.2000 RIX', '')
+arisen.transfer('inita', 'initb', '1.2000 RIX', '')
 
 // named parameters
-rsn.transfer({from: 'inita', to: 'initb', quantity: '1.3000 RIX', memo: ''})
+arisen.transfer({from: 'inita', to: 'initb', quantity: '1.3000 RIX', memo: ''})
 
 // options appear after parameters
 options = {broadcast: true, sign: true}
 
 // `false` is a shortcut for {broadcast: false}
-rsn.transfer('inita', 'initb', '1.4000 RIX', '', false)
+arisen.transfer('inita', 'initb', '1.4000 RIX', '', false)
 ```
 
 Read-write API methods and documentation are generated from the arisen
@@ -284,7 +284,7 @@ Assets amounts require zero padding.  For a better user-experience, if you know
 the correct precision you may use DecimalPad to add the padding.
 
 ```js
-DecimalPad = Rsn.modules.format.DecimalPad
+DecimalPad = Arisen.modules.format.DecimalPad
 userInput = '10.2'
 precision = 4
 assert.equal('10.2000', DecimalPad(userInput, precision))
@@ -297,7 +297,7 @@ For more advanced signing, see `keyProvider` and `signProvider` in
 
 Shorthand is available for some types such as Asset and Authority.  This syntax
 is only for concise functions and does not work when providing entire transaction
-objects to `rsn.transaction`..
+objects to `arisen.transaction`..
 
 For example:
 * permission `inita` defaults `inita@active`
@@ -312,7 +312,7 @@ New accounts will likely require some staked tokens for RAM and bandwidth.
 wif = '5KQwrPbwdL6PhXujxW37FSSQZ1JiwsST4cqQzDeyXtP79zkvFD3'
 pubkey = 'RSN6MRyAjQq8ud7hVNYcfnVPJqcVpscN5So8BhtHuGYqET5GDW5CV'
 
-rsn.transaction(tr => {
+arisen.transaction(tr => {
   tr.newaccount({
     creator: 'arisen',
     name: 'myaccount',
@@ -354,7 +354,7 @@ $ npm install binaryen@37.0.0
 
 ```js
 binaryen = require('binaryen')
-rsn = Rsn({keyProvider, binaryen})
+arisen = Arisen({keyProvider, binaryen})
 ```
 
 #### Deploy
@@ -363,25 +363,25 @@ rsn = Rsn({keyProvider, binaryen})
 wasm = fs.readFileSync(`docker/contracts/arisen.token/arisen.token.wasm`)
 abi = fs.readFileSync(`docker/contracts/arisen.token/arisen.token.abi`)
 
-// Publish contract to the decentralized banking network
-rsn.setcode('myaccount', 0, 0, wasm) // @returns {Promise}
-rsn.setabi('myaccount', JSON.parse(abi)) // @returns {Promise}
+// Publish contract to the ARISEN network
+arisen.setcode('myaccount', 0, 0, wasm) // @returns {Promise}
+arisen.setabi('myaccount', JSON.parse(abi)) // @returns {Promise}
 ```
 
 #### Fetch a smart contract
 
 ```js
 // @returns {Promise}
-rsn.contract('myaccount', [options], [callback])
+arisen.contract('myaccount', [options], [callback])
 
 // Run immediately, `myaction` returns a Promise
-rsn.contract('myaccount').then(myaccount => myaccount.myaction(..))
+arisen.contract('myaccount').then(myaccount => myaccount.myaction(..))
 
 // Group actions. `transaction` returns a Promise but `myaction` does not
-rsn.transaction('myaccount', myaccount => { myaccount.myaction(..) })
+arisen.transaction('myaccount', myaccount => { myaccount.myaction(..) })
 
 // Transaction with multiple contracts
-rsn.transaction(['myaccount', 'myaccount2'], ({myaccount, myaccount2}) => {
+arisen.transaction(['myaccount', 'myaccount2'], ({myaccount, myaccount2}) => {
    myaccount.myaction(..)
    myaccount2.myaction(..)
 })
@@ -390,13 +390,13 @@ rsn.transaction(['myaccount', 'myaccount2'], ({myaccount, myaccount2}) => {
 #### Offline or cold-storage contract
 
 ```js
-rsn = Rsn({httpEndpoint: null})
+arisen = Arisen({httpEndpoint: null})
 
 abi = fs.readFileSync(`docker/contracts/arisen.token/arisen.token.abi`)
-rsn.fc.abiCache.abi('myaccount', JSON.parse(abi))
+arisen.fc.abiCache.abi('myaccount', JSON.parse(abi))
 
 // Check that the ABI is available (print usage)
-rsn.contract('myaccount').then(myaccount => myaccount.create())
+arisen.contract('myaccount').then(myaccount => myaccount.create())
 ```
 #### Offline or cold-storage transaction
 
@@ -406,14 +406,14 @@ rsn.contract('myaccount').then(myaccount => myaccount.create())
 // Prepare headers
 expireInSeconds = 60 * 60 // 1 hour
 
-rsn = Rsn(/* {httpEndpoint: 'https://..'} */)
+arisen = Arisen(/* {httpEndpoint: 'https://..'} */)
 
-info = await rsn.getInfo({})
+info = await arisen.getInfo({})
 chainDate = new Date(info.head_block_time + 'Z')
 expiration = new Date(chainDate.getTime() + expireInSeconds * 1000)
 expiration = expiration.toISOString().split('.')[0]
 
-block = await rsn.getBlock(info.last_irreversible_block_num)
+block = await arisen.getBlock(info.last_irreversible_block_num)
 
 transactionHeaders = {
   expiration,
@@ -424,16 +424,16 @@ transactionHeaders = {
 // OFFLINE (bring `transactionHeaders`)
 
 // All keys in keyProvider will sign.
-rsn = Rsn({httpEndpoint: null, chainId, keyProvider, transactionHeaders})
+arisen = Arisen({httpEndpoint: null, chainId, keyProvider, transactionHeaders})
 
-transfer = await rsn.transfer('inita', 'initb', '1.0000 RIX', '')
+transfer = await arisen.transfer('inita', 'initb', '1.0000 RIX', '')
 transferTransaction = transfer.transaction
 
 // ONLINE (bring `transferTransaction`)
 
-rsn = Rsn(/* {httpEndpoint: 'https://..'} */)
+arisen = Arisen(/* {httpEndpoint: 'https://..'} */)
 
-processedTransaction = await rsn.pushTransaction(transferTransaction)
+processedTransaction = await arisen.pushTransaction(transferTransaction)
 ```
 
 #### Custom Private Currency
@@ -441,7 +441,7 @@ processedTransaction = await rsn.pushTransaction(transferTransaction)
 ```js
 // more on the contract / transaction syntax
 
-await rsn.transaction('myaccount', myaccount => {
+await arisen.transaction('myaccount', myaccount => {
 
   // Create the initial token with its max supply
   // const options = {authorization: 'myaccount'} // default
@@ -451,7 +451,7 @@ await rsn.transaction('myaccount', myaccount => {
   myaccount.issue('myaccount', '10000.000 TOK', 'issue')
 })
 
-const balance = await rsn.getCurrencyBalance('myaccount', 'myaccount', 'TOK')
+const balance = await arisen.getCurrencyBalance('myaccount', 'myaccount', 'TOK')
 console.log('Currency Balance', balance)
 ```
 
@@ -461,10 +461,10 @@ Other ways to use contracts and transactions.
 
 ```javascript
 // if either transfer fails, both will fail (1 transaction, 2 messages)
-await rsn.transaction(rsn =>
+await arisen.transaction(arisen =>
   {
-    rsn.transfer('inita', 'initb', '1.0000 RIX', ''/*memo*/)
-    rsn.transfer('inita', 'initc', '1.0000 RIX', ''/*memo*/)
+    arisen.transfer('inita', 'initb', '1.0000 RIX', ''/*memo*/)
+    arisen.transfer('inita', 'initc', '1.0000 RIX', ''/*memo*/)
     // Returning a promise is optional (but handled as expected)
   }
   // [options],
@@ -472,19 +472,19 @@ await rsn.transaction(rsn =>
 )
 
 // transaction on a single contract
-await rsn.transaction('myaccount', myaccount => {
+await arisen.transaction('myaccount', myaccount => {
   myaccount.transfer('myaccount', 'inita', '10.000 TOK@myaccount', '')
 })
 
 // mix contracts in the same transaction
-await rsn.transaction(['myaccount', 'arisen.token'], ({myaccount, arisen_token}) => {
+await arisen.transaction(['myaccount', 'arisen.token'], ({myaccount, arisen_token}) => {
   myaccount.transfer('inita', 'initb', '1.000 TOK@myaccount', '')
   arisen_token.transfer('inita', 'initb', '1.0000 RIX', '')
 })
 
 // The contract method does not take an array so must be called once for
 // each contract that is needed.
-const myaccount = await rsn.contract('myaccount')
+const myaccount = await arisen.contract('myaccount')
 await myaccount.transfer('myaccount', 'inita', '1.000 TOK', '')
 
 // a transaction to a contract instance can specify multiple actions
@@ -505,26 +505,26 @@ es2015 code built in a separate step. If you're changing and testing code,
 import from `./src` instead.
 
 ```javascript
-Rsn = require('./src')
+Arisen = require('./src')
 
 // forceActionDataHex = false helps transaction readability but may trigger back-end bugs
 config = {verbose: true, debug: false, broadcast: true, forceActionDataHex: true, keyProvider}
 
-rsn = Rsn(config)
+arisen = Arisen(config)
 ```
 
 #### Fcbuffer
 
-The `rsn` instance can provide serialization:
+The `arisen` instance can provide serialization:
 
 ```javascript
 // 'asset' is a type but could be any struct or type like: transaction or uint8
 type = {type: 1, data: '00ff'}
-buffer = rsn.fc.toBuffer('extensions_type', type)
-assert.deepEqual(type, rsn.fc.fromBuffer('extensions_type', buffer))
+buffer = arisen.fc.toBuffer('extensions_type', type)
+assert.deepEqual(type, arisen.fc.fromBuffer('extensions_type', buffer))
 
 // ABI Serialization
-rsn.contract('arisen.token', (error, arisen_token) => {
+arisen.contract('arisen.token', (error, arisen_token) => {
   create = {issuer: 'inita', maximum_supply: '1.0000 RIX'}
   buffer = arisen_token.fc.toBuffer('create', create)
   assert.deepEqual(create, arisen_token.fc.fromBuffer('create', buffer))
@@ -540,7 +540,7 @@ need to use them directly.  They are exported here giving more API access or
 in some cases may be used standalone.
 
 ```javascript
-var {format, api, ecc, json, Fcbuffer} = Rsn.modules
+var {format, api, ecc, json, Fcbuffer} = Arisen.modules
 ```
 * format [./format.md](./docs/format.md)
   * Blockchain name validation
@@ -548,12 +548,12 @@ var {format, api, ecc, json, Fcbuffer} = Rsn.modules
 
 * arisenjs-api [[Github](https://github.com/arisen/arisenjs-api), [NPM](https://www.npmjs.org/package/arisenjs-api)]
   * Remote API to an Arisen blockchain node (nodrsn)
-  * Use this library directly if you need read-only access to the decentralized banking network
+  * Use this library directly if you need read-only access to the ARISEN network
     (don't need to sign transactions).
 
 * arisenjs-ecc [[Github](https://github.com/arisen/arisenjs-ecc), [NPM](https://www.npmjs.org/package/arisenjs-ecc)]
-  * Bank Account's Private Key, Public Key, Signature, AES, Encryption / Decryption
-  * Validate public or Bank Account's Private Keys
+  * ARISEN account's Private Key, Public Key, Signature, AES, Encryption / Decryption
+  * Validate public or ARISEN account's Private Keys
   * Encrypt or decrypt with Arisen compatible checksums
   * Calculate a shared secret
 
@@ -561,10 +561,10 @@ var {format, api, ecc, json, Fcbuffer} = Rsn.modules
   * Blockchain definitions (api method names, blockchain schema)
 
 * arisenjs-keygen [[Github](https://github.com/arisen/arisenjs-keygen), [NPM](https://www.npmjs.org/package/arisenjs-keygen)]
-  * Bank Account's Private Key storage and key management
+  * ARISEN account's Private Key storage and key management
 
 * Fcbuffer [[Github](https://github.com/arisen/arisenjs-fcbuffer), [NPM](https://www.npmjs.org/package/fcbuffer)]
-  * Binary serialization used by the decentralized banking network
+  * Binary serialization used by the ARISEN network
   * Clients sign the binary form of the bank transaction
   * Allows client to know what it is signing
 
@@ -576,16 +576,16 @@ git clone https://github.com/ARISENIO/arisenjs.git
 cd arisenjs
 npm install
 npm run build_browser
-# builds: ./dist/rsn.js load with ./dist/index.html
+# builds: ./dist/arisen.js load with ./dist/index.html
 
 npm run build_browser_test
 # builds: ./dist/test.js run with ./dist/test.html
 ```
 
 ```html
-<script src="rsn.js"></script>
+<script src="arisen.js"></script>
 <script>
-var rsn = Rsn()
+var arisen = Arisen()
 //...
 </script>
 ```
