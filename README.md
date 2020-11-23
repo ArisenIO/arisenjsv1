@@ -61,7 +61,7 @@ PARAMETERS
 }
 ```
 
-Start a nodrsnd process.  The docker in this repository provides a setup
+Start a aosd process.  The docker in this repository provides a setup
 the supports the examples in this README.
 
 ```bash
@@ -126,39 +126,39 @@ arisen = Arisen(config)
 * **keyProvider** `[array<string>|string|function]` - Provides ARISEN account's Private Keys
   used to sign transaction.  If multiple ARISEN account's Private Keys are found, the API
   `get_required_keys` is called to discover which signing keys to use.  If a
-  function is provided, this function is called for Each bank transaction.
+  function is provided, this function is called for Each wallet transaction.
 
-* **httpEndpoint** `string` - http or https location of a nodrsnd server
+* **httpEndpoint** `string` - http or https location of a aosd server
   providing a chain API.  When using arisenjs from a browser remember to configure
-  the same origin policy in nodrsnd or proxy server.  For testing, nodrsnd
+  the same origin policy in aosd or proxy server.  For testing, aosd
   configuration `access-control-allow-origin = *` could be used.
 
   Set this value to **null** for a cold-storage (no network) configuration.
 
-* **expireInSeconds** `number` - number of seconds before the bank transaction
-  will expire.  The time is based on the nodrsnd's clock.  An unexpired
+* **expireInSeconds** `number` - number of seconds before the wallet transaction
+  will expire.  The time is based on the aosd's clock.  An unexpired
   transaction that may have had an error is a liability until the expiration
   is reached, this time should be brief.
 
-* **broadcast** `[boolean=true]` - post the bank transaction to
+* **broadcast** `[boolean=true]` - post the wallet transaction to
   the ARISEN network.  Use false to obtain a fully Signed ARISEN Transaction.
 
 * **verbose** `[boolean=false]` - verbose logging such as API activity.
 
 * **debug** `[boolean=false]` - low level debug logging (serialization).
 
-* **sign** `[boolean=true]` - sign the bank transaction with a ARISEN account's Private Key.  Leaving
+* **sign** `[boolean=true]` - sign the wallet transaction with a ARISEN account's Private Key.  Leaving
   a transaction unsigned avoids the need to provide a ARISEN account's Private Key.
 
 * **mockTransactions** (advanced)
   * `mockTransactions: () => null // 'pass',  or 'fail'`
-  * `pass` - do not broadcast, always pretend that the bank transaction worked
-  * `fail` - do not broadcast, pretend the bank transaction failed
+  * `pass` - do not broadcast, always pretend that the wallet transaction worked
+  * `fail` - do not broadcast, pretend the wallet transaction failed
   * `null|undefined` - broadcast as usual
 
 * **transactionHeaders** (advanced) - manually calculate transaction header.  This
   may be provided so arisenjs does not need to make header related API calls to
-  nodrsn.  Used in environments like cold-storage.  This callback is called for
+  aos.  Used in environments like cold-storage.  This callback is called for
   every transaction. Headers are documented here [arisenjs-api#headers](https://github.com/ARISENIO/arisenjs-api/blob/HEAD/docs/index.md#headers--object).
   * `transactionHeaders: (expireInSeconds, callback) => {callback(null/*error*/, headers)}`
 
@@ -200,15 +200,15 @@ arisen.transfer('alice', 'bob', '1.0000 RIX', '', options)
   an account_name.  The account_name in the 1st field gets added as the
   active key authorization for the action.
 
-* **broadcast** `[boolean=true]` - post the bank transaction to
+* **broadcast** `[boolean=true]` - post the wallet transaction to
   the ARISEN network.  Use false to obtain a fully Signed ARISEN Transaction.
 
-* **sign** `[boolean=true]` - sign the bank transaction with a ARISEN account's Private Key.  Leaving
+* **sign** `[boolean=true]` - sign the wallet transaction with a ARISEN account's Private Key.  Leaving
   a transaction unsigned avoids the need to provide a ARISEN account's Private Key.
 
 ### Transaction
 
-the bank transaction function accepts the standard blockchain transaction.
+the wallet transaction function accepts the standard blockchain transaction.
 
 Required transaction header fields will be added unless your signing without a
 network connection (httpEndpoint == null). In that case provide you own headers:
@@ -496,8 +496,8 @@ await myaccount.transaction(myaccountTr => {
 
 # Development
 
-From time-to-time the arisenjs and nodrsn binary format will change between releases
-so you may need to start `nodrsn` with the `--skip-transaction-signatures` parameter
+From time-to-time the arisenjs and aos binary format will change between releases
+so you may need to start `aos` with the `--skip-transaction-signatures` parameter
 to get your transactions to pass.
 
 Note, `package.json` has a "main" pointing to `./lib`.  The `./lib` folder is for
@@ -547,7 +547,7 @@ var {format, api, ecc, json, Fcbuffer} = Arisen.modules
   * Asset string formatting
 
 * arisenjs-api [[Github](https://github.com/arisen/arisenjs-api), [NPM](https://www.npmjs.org/package/arisenjs-api)]
-  * Remote API to an Arisen blockchain node (nodrsn)
+  * Remote API to an Arisen blockchain node (aos)
   * Use this library directly if you need read-only access to the ARISEN network
     (don't need to sign transactions).
 
@@ -565,7 +565,7 @@ var {format, api, ecc, json, Fcbuffer} = Arisen.modules
 
 * Fcbuffer [[Github](https://github.com/arisen/arisenjs-fcbuffer), [NPM](https://www.npmjs.org/package/fcbuffer)]
   * Binary serialization used by the ARISEN network
-  * Clients sign the binary form of the bank transaction
+  * Clients sign the binary form of the wallet transaction
   * Allows client to know what it is signing
 
 

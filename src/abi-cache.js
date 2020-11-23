@@ -9,7 +9,7 @@ function AbiCache(network, config) {
   const cache = {}
 
   /**
-    Asynchronously fetch and cache an ABI from the decentralized banking network.
+    Asynchronously fetch and cache an ABI from the decentralized walleting network.
 
     @arg {string} account - blockchain account with deployed contract
     @arg {boolean} [force = true] false when ABI is immutable.

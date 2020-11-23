@@ -136,11 +136,11 @@ function throwOnDuplicate(o1, o2, msg) {
 
 /**
   The default sign provider is designed to interact with the available public
-  keys (maybe just one), the bank transaction, and the decentralized banking network to figure out
+  keys (maybe just one), the wallet transaction, and the decentralized walleting network to figure out
   the minimum set of signing keys.
 
-  If only one key is available, the decentralized banking network API calls are skipped and that
-  key is used to sign the bank transaction.
+  If only one key is available, the decentralized walleting network API calls are skipped and that
+  key is used to sign the wallet transaction.
 */
 const defaultSignProvider = (eos, config) => async function({sign, buf, transaction}) {
   const {keyProvider} = config

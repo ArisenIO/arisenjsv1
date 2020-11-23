@@ -64,7 +64,7 @@ const charidx = ch => {
 /**
   Encode a name (a base32 string) to a number.
 
-  For performance reasons, the decentralized banking network uses the numerical encoding of strings
+  For performance reasons, the decentralized walleting network uses the numerical encoding of strings
   for very common types like account names.
 
   @see types.hpp string_to_name

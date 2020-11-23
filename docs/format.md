@@ -3,7 +3,7 @@
 <dl>
 <dt><a href="#encodeName">encodeName(name)</a> ⇒ <code>string.&lt;uint64&gt;</code></dt>
 <dd><p>Encode a name (a base32 string) to a number.</p>
-<p>  For performance reasons, the decentralized banking network uses the numerical encoding of strings
+<p>  For performance reasons, the decentralized walleting network uses the numerical encoding of strings
   for very common types like account names.</p>
 </dd>
 <dt><a href="#decodeName">decodeName(value)</a> ⇒ <code>string</code></dt>
@@ -31,7 +31,7 @@
 ## encodeName(name) ⇒ <code>string.&lt;uint64&gt;</code>
 Encode a name (a base32 string) to a number.
 
-  For performance reasons, the decentralized banking network uses the numerical encoding of strings
+  For performance reasons, the decentralized walleting network uses the numerical encoding of strings
   for very common types like account names.
 
 **Kind**: global function  
